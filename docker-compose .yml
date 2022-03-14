@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  soloban_client:
+    build:
+      context: .
+    env_file:
+      - .env
+    volumes:
+      - ./:/app
+    ports:
+      - 8081:3000
+    tty: true
+

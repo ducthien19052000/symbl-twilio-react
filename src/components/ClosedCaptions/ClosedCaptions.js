@@ -1,6 +1,6 @@
-import {Paper, Typography} from "@material-ui/core";
-import React, {useEffect, useState} from "react";
-import {createStyles, makeStyles} from "@material-ui/core/styles";
+import { Paper, Typography } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
 import useSymblContext from "../../hooks/useSymblContext/useSymblContext";
 import useIsUserActive from "../Controls/useIsUserActive/useIsUserActive";
 import useRoomState from "../../hooks/useRoomState/useRoomState";
@@ -37,7 +37,7 @@ const useStyles = makeStyles(() =>
 );
 
 const getContent = (data = {}) => {
-    const {punctuated, payload} = data;
+    const { punctuated, payload } = data;
     if (punctuated && punctuated.transcript) {
         return punctuated.transcript;
     } else if (payload && payload.content) {
@@ -48,12 +48,23 @@ const getContent = (data = {}) => {
     return undefined;
 }
 
+const generateString = (length, characters) => {
+    let result = ' ';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return result;
+}
+
 const ClosedCaptions = (props, context) => {
-    const {closedCaptionResponse} = useSymblContext()
+    const { closedCaptionResponse } = useSymblContext()
     const text = getContent(closedCaptionResponse);
+    const [transText, setTransText] = useState()
     const classes = useStyles();
 
-    const {roomState} = useRoomState();
+    const { roomState } = useRoomState();
     const isUserActive = useIsUserActive();
     const addExtraMargin = isUserActive || roomState === 'disconnected';
 
@@ -65,22 +76,37 @@ const ClosedCaptions = (props, context) => {
         }
     }, [containerRef]);
 
+
     useEffect(() => {
         if (containerRef && containerRef.current) {
             const element = containerRef.current;
             element.scrollTop = element.scrollHeight;
         }
     }, [text, containerRef])
+    useEffect(() => {
+        setTransText()
+        if (text) {
+            let timeoutTrans = setTimeout(() => { setTransText(generateString(text.length, text)) }, 1000)
+
+            return () => {
+                clearTimeout(timeoutTrans)
+            }
+        }
+    }, [text])
+
 
 
     return (
-        <div className={classes.container} ref={containerRef} style={{marginBottom: addExtraMargin ? 80 : 0 }}>
+        <div className={classes.container} ref={containerRef} style={{ marginBottom: addExtraMargin ? 80 : 0 }}>
             {text ? (
-            <Paper variant={"outlined"} className={classes.paper}>
-                <Typography variant={"caption"} className={classes.caption}>
-                    {text}
-                </Typography>
-            </Paper>) : undefined}
+                <Paper variant={"outlined"} className={classes.paper}>
+                    <Typography variant={"caption"} className={classes.caption}>
+                        {text}
+                    </Typography>
+                    <Typography variant={"caption"} className={classes.caption} style={{ display: 'block', color: 'red' }}>
+                        {transText}
+                    </Typography>
+                </Paper>) : undefined}
         </div>
     );
 };

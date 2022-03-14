@@ -35,7 +35,7 @@ export default function AppStateProvider(props) {
         const endpoint = process.env.REACT_APP_TWILIO_TOKEN_ENDPOINT || '/twilio-token';
         const params = new window.URLSearchParams({ identity, roomName });
 
-        return fetch(`${endpoint}?${params}`, { headers, mode: 'cors'}).then(res => res.text());
+        return fetch(`${endpoint}?${params}`, { headers, mode: 'cors'}).then(res => res.json());
       },
     };
 
@@ -45,7 +45,7 @@ export default function AppStateProvider(props) {
       .getToken(name, room)
       .then(res => {
         setIsFetching(false);
-        return res;
+        return res.data;
       })
       .catch(err => {
         setError(err);

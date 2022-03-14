@@ -25,10 +25,8 @@ export function SymblProvider({
     const onResultCallback = (data) => {
         if (data) {
             const { type } = data;
-            console.log("Data", data);
             if (type) {
                 if (type === 'transcript_response') {
-                    console.log('Text', data);
                     setClosedCaptionResponse(data)
                 } else if (type === 'message_response') {
                     setMessages(data.messages)

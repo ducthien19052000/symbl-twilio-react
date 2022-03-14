@@ -4,7 +4,6 @@ import {BrowserRouter as Router, Redirect, Switch} from 'react-router-dom';
 import './index.css';
 import App from './App';
 import AppStateProvider, {useAppState} from './state';
-import * as serviceWorker from './serviceWorker';
 import {VideoProvider} from "./components/VideoProvider";
 import generateConnectionOptions from "./utils/generateConnectionOptions/generateConnectionOptions";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -52,7 +51,4 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+

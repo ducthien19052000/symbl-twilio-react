@@ -19,9 +19,6 @@ export default function ToggleAudioButton(props) {
   const classes = useStyles();
 
   const {muteSymbl, unMuteSymbl, isMute} = useSymblContext();
-useEffect(()=>{
-  console.log('Mute',isMute);
-},[isMute])
   return (
     <Tooltip
       title={isMute ? 'Mute Audio' : 'Unmute Audio'}

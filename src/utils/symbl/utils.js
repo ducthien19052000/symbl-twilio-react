@@ -11,8 +11,9 @@ export const getAccessToken = async ({appId, appSecret}) => {
         });
     } else {
         const endpoint = process.env.REACT_APP_SYMBL_TOKEN_ENDPOINT || '/symbl-token';
-        const resp = await fetch(`${endpoint}`, { headers: new window.Headers(), mode: 'cors'});
-        return await resp.json();
+        const resp = await fetch(`${endpoint}`, { headers: new window.Headers(), mode: 'cors'}).then((res=>res.json()));
+        const token =resp.data
+        return token;
     }
 }
 
