@@ -1,6 +1,11 @@
-import SymblTwilioConnector from "../../../utils/symbl/SymblTwilioConnector";
+
 import {useCallback, useState} from 'react';
 import SymblWebSocketAPI from "../../../utils/symbl/SymblWebSocketAPI";
+
+declare const window: Window & typeof globalThis &{
+    connector:any;
+    websocketApi:any
+}
 
 export default function useSymbl(onError, onResult, options) {
     const [isStarting, setIsStarting] = useState(false);
@@ -8,37 +13,6 @@ export default function useSymbl(onError, onResult, options) {
     const [isConnected, setIsConnected] = useState(false);
     const [isMute, setIsMuted] = useState(false);
     const [startedTime, setStartedTime] = useState(null);
-
-    const startSymbl = useCallback(
-        (roomName, email) => {
-            console.log('helllooo');
-            console.log(roomName, email)
-            setIsStarting(true);
-            window.connector = new SymblTwilioConnector({
-                callback: onResult,
-                roomName
-            });
-            return window.connector.startSymblConnector(email)
-                .then(response => {
-                    console.log('Symbl Started. ', response);
-                    if (response && response.connectionId) {
-                        console.log('Subscribing')
-                        window.connector.subscribe()
-                        console.log('Subscribed to Symbl')
-                        setConnectionId(response.connectionId);
-                        console.log('ConnectionId: ', connectionId);
-                        setIsConnected(true);
-                    } else {
-                        onError("Symbl couldn't be started.");
-                    }
-                    setIsStarting(false);
-                }).catch(err => {
-                onError(err);
-                    setIsStarting(false);
-            });
-        },
-        [onError, onResult, connectionId]
-    );
 
     const stopSymbl = useCallback(async (connectionId) => {
         console.log('Stop symbl called for connectionId: ', connectionId, window.connector);
@@ -132,7 +106,6 @@ export default function useSymbl(onError, onResult, options) {
         isConnected,
         isStarting,
         connectionId,
-        startSymbl,
         stopSymbl,
         startSymblWebSocketApi,
         stopSymblWebSocketApi,

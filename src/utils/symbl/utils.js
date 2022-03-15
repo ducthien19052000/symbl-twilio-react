@@ -24,19 +24,9 @@ export const getAccessToken = async ({appId, appSecret}) => {
  * @param options
  * @return {Promise<any>}
  */
-export const postData = async (url = '', data = {}, options = { credentialsInHeader: false }) => {
-    const {credentialsInHeader, appId, appSecret, accessToken} = options;
-
+export const postData = async (url = '', data = {}, options = { credentialsInHeader: false, }) => {
+    const {credentialsInHeader, accessToken} = options;
     const headers = {};
-
-    if (credentialsInHeader && appId) {
-        headers['x-app-id'] =  appId;
-    }
-
-    if (credentialsInHeader && appSecret) {
-        headers['x-app-secret'] =  appSecret;
-    }
-
     if (!credentialsInHeader && accessToken) {
         headers['x-api-key'] =  accessToken;
     }

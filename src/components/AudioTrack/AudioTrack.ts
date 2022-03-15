@@ -3,7 +3,7 @@ import {useAppState} from '../../state';
 
 export default function AudioTrack({track}) {
     const {activeSinkId} = useAppState();
-    const audioEl = useRef();
+    const audioEl = useRef<any>();
 
     useEffect(() => {
         audioEl.current = track.attach();

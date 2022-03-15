@@ -1,16 +1,15 @@
-import { isMobile } from '../../utils';
 
 export const initialSettings = {
   trackSwitchOffMode: undefined,
   dominantSpeakerPriority: 'standard',
   bandwidthProfileMode: 'collaboration',
-  maxTracks: isMobile ? '5' : '10',
+  maxTracks:'10',
   maxAudioBitrate: '16000',
   renderDimensionLow: 'low',
   renderDimensionStandard: '960p',
   renderDimensionHigh: 'wide1080p',
-  symblAppId: localStorage.getItem('symblAppId') || '',
-  symblAppSecret: localStorage.getItem('symblAppSecret') || ''
+  // symblAppId: localStorage.getItem('symblAppId') || '',
+  // symblAppSecret: localStorage.getItem('symblAppSecret') || ''
 };
 
 // This inputLabels object is used by ConnectionOptions.js. It is used to populate the id, name, and label props

@@ -4,6 +4,7 @@ import { createStyles, makeStyles } from "@material-ui/core/styles";
 import useSymblContext from "../../hooks/useSymblContext/useSymblContext";
 import useIsUserActive from "../Controls/useIsUserActive/useIsUserActive";
 import useRoomState from "../../hooks/useRoomState/useRoomState";
+import useTranslate from "../../hooks/useTranslate/useTranslate";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -13,8 +14,7 @@ const useStyles = makeStyles(() =>
             position: 'absolute',
             width: '100%',
             zIndex: 1000,
-            height: '6.8em',
-            overflow: 'hidden',
+            height: 'auto',
             // maxWidth: 'min-content'
         },
         paper: {
@@ -25,7 +25,8 @@ const useStyles = makeStyles(() =>
             display: 'inline-block',
             backgroundColor: 'rgb(0,0,0, 0)',
             zIndex: 1000,
-            maxWidth: '60vw'
+            maxWidth: '80vw',
+            height:'auto'
         },
         caption: {
             fontWeight: 600,
@@ -36,7 +37,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-const getContent = (data = {}) => {
+const getContent = (data:any = {}) => {
     const { punctuated, payload } = data;
     if (punctuated && punctuated.transcript) {
         return punctuated.transcript;
@@ -48,20 +49,10 @@ const getContent = (data = {}) => {
     return undefined;
 }
 
-const generateString = (length, characters) => {
-    let result = ' ';
-    const charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
 
-    return result;
-}
-
-const ClosedCaptions = (props, context) => {
+const ClosedCaptions = () => {
     const { closedCaptionResponse } = useSymblContext()
     const text = getContent(closedCaptionResponse);
-    const [transText, setTransText] = useState()
     const classes = useStyles();
 
     const { roomState } = useRoomState();
@@ -69,6 +60,8 @@ const ClosedCaptions = (props, context) => {
     const addExtraMargin = isUserActive || roomState === 'disconnected';
 
     const [containerRef, setContainerRef] = useState(null);
+
+    const translateText = useTranslate(text,'ja','en')
 
     useEffect(() => {
         if (!containerRef) {
@@ -83,16 +76,7 @@ const ClosedCaptions = (props, context) => {
             element.scrollTop = element.scrollHeight;
         }
     }, [text, containerRef])
-    useEffect(() => {
-        setTransText()
-        if (text) {
-            let timeoutTrans = setTimeout(() => { setTransText(generateString(text.length, text)) }, 1000)
-
-            return () => {
-                clearTimeout(timeoutTrans)
-            }
-        }
-    }, [text])
+   
 
 
 
@@ -104,7 +88,7 @@ const ClosedCaptions = (props, context) => {
                         {text}
                     </Typography>
                     <Typography variant={"caption"} className={classes.caption} style={{ display: 'block', color: 'red' }}>
-                        {transText}
+                        {translateText}
                     </Typography>
                 </Paper>) : undefined}
         </div>

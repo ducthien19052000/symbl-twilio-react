@@ -50,8 +50,8 @@ function App() {
 
 
     return (
-        <Container style={{}}>
-            <MenuBar/>
+        <Container>
+            <MenuBar />
             <Main>
                 {roomState !== 'disconnected'&& (
                     <SymblProvider roomName={roomName}>

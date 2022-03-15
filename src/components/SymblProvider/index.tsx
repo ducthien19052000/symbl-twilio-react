@@ -7,10 +7,10 @@ const symblConnectionMode = 'websocket_api';
 export const SymblContext = createContext(null);
 
 export function SymblProvider({
-    options, roomName, children, onError = () => {
+     roomName, children, onError = (err:any) => {
     }
 }) {
-    const onErrorCallback = (error) => {
+    const onErrorCallback = (error:any) => {
         console.log(`ERROR: ${error.message}`, error);
         onError(error);
     };
@@ -59,10 +59,10 @@ export function SymblProvider({
     };
 
     const {
-        isConnected, connectionId, startedTime, startSymbl, stopSymbl, startSymblWebSocketApi, stopSymblWebSocketApi,
+        isConnected, connectionId, startedTime, stopSymbl, startSymblWebSocketApi, stopSymblWebSocketApi,
         muteSymbl, unMuteSymbl, isMute
     } =
-        useSymbl(onErrorCallback, onResultCallback, { ...options });
+        useSymbl(onErrorCallback, onResultCallback, { });
 
     useEffect(() => {
         (async () => {
@@ -76,8 +76,6 @@ export function SymblProvider({
                             name: localParticipant.identity
                         }
                     });
-                } else {
-                    await startSymbl(roomName);
                 }
             }
         })();
@@ -88,7 +86,6 @@ export function SymblProvider({
             value={{
                 isConnected,
                 connectionId,
-                startSymbl,
                 stopSymbl,
                 startSymblWebSocketApi,
                 stopSymblWebSocketApi,

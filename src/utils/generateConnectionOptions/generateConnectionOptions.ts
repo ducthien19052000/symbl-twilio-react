@@ -19,6 +19,7 @@ export default function generateConnectionOptions(settings) {
                     high: getResolution(settings.renderDimensionHigh),
                 },
                 maxTracks: Number(settings.maxTracks),
+                maxSubscriptionBitrate:0,
             },
         },
         dominantSpeaker: true,

@@ -1,4 +1,6 @@
-import React from 'react';
+
+import React from "react";
+import useMainSpeaker from "../../hooks/useMainSpeaker/useMainSpeaker";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -34,22 +36,15 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MainParticipantInfo({ participant = {}, children }) {
+
+export default function MainParticipant() {
+  const mainParticipant = useMainSpeaker();
   const classes = useStyles();
-
-
-  
   return (
-    <div
-      data-cy-main-participant
-      className={clsx(classes.container)}
-    >
+    <div data-cy-main-participant className={clsx(classes.container)}>
       <div className={classes.infoContainer}>
-        <h4 className={classes.identity}>
-          {participant.identity}
-        </h4>
+        <h4 className={classes.identity}>{mainParticipant.identity}</h4>
       </div>
-      {children}
     </div>
   );
 }

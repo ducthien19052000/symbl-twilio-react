@@ -7,7 +7,7 @@ import ToggleAudioButton from './ToggleAudioButton/ToggleAudioButton';
 import useIsUserActive from './useIsUserActive/useIsUserActive';
 import useRoomState from '../../hooks/useRoomState/useRoomState';
 
-const useStyles = makeStyles((theme) =>
+const useStyles = makeStyles((theme:any) =>
     createStyles({
         container: {
             display: 'flex',

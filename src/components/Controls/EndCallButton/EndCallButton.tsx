@@ -10,6 +10,10 @@ import useVideoContext from '../../../hooks/useVideoContext/useVideoContext';
 
 import useSymblContext from "../../../hooks/useSymblContext/useSymblContext";
 
+declare const window: Window & typeof globalThis &{
+    location:any;
+}
+
 const useStyles = makeStyles((theme) =>
     createStyles({
         fab: {

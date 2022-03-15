@@ -18,7 +18,7 @@ export function getInitials(name) {
     .toUpperCase();
 }
 
-export default function UserAvatar({ user = {}}) {
+export default function UserAvatar({ user = {}}:any) {
   const classes = useStyles();
   const { displayName, photoURL } = user;
 

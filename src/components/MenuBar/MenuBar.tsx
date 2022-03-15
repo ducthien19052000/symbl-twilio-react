@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export default function MenuBar() {
+ const MenuBar=()=> {
   const classes = useStyles();
   const { URLRoomName } = useParams();
   const { user, getToken, isFetching } = useAppState();
@@ -133,3 +133,5 @@ export default function MenuBar() {
     </AppBar>
   );
 }
+
+export default MenuBar;
