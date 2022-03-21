@@ -37,6 +37,8 @@ export function SymblProvider({
 
     const onSpeechDetected = (data) => {
         setClosedCaptionResponse(data)
+        console.log('Voice',data);
+        
     };
 
     const onMessageResponse = (newMessages) => {

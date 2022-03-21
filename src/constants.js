@@ -3,3 +3,5 @@ export const DEFAULT_VIDEO_CONSTRAINTS = {
   height: 720,
   frameRate: 24,
 };
+
+export const DEBOUNCE_TRANSLATE=300 //300 miliseconds
